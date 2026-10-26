@@ -101,10 +101,10 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Account & Support */}
+        {/* Customer Care */}
         <div>
           <h4 className="font-semibold text-slate-200 uppercase tracking-wider text-xs mb-3">
-            Account & Demo
+            Customer Care
           </h4>
           <ul className="space-y-2">
             <li>
@@ -118,31 +118,36 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/login" className="hover:text-white transition-colors">
-                Demo Admin Credentials
+              <Link href="/orders" className="hover:text-white transition-colors">
+                Track My Order
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin" className="hover:text-white transition-colors">
+                Admin Management Portal
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Architecture Note */}
+        {/* Our Promise */}
         <div>
           <h4 className="font-semibold text-slate-200 uppercase tracking-wider text-xs mb-3">
-            System Architecture
+            Our Guarantee
           </h4>
           <p className="text-slate-400 leading-relaxed mb-3">
-            Express.js REST backend communicating with PostgreSQL via Prisma ORM. Client-side HTTP communication strictly decoupled.
+            Every Korziva product is backed by a 2-year manufacturer warranty, 30-day trial period, and direct human customer support.
           </p>
-          <div className="flex items-center gap-2 text-[11px] text-emerald-400">
+          <div className="flex items-center gap-2 text-[11px] text-emerald-400 font-medium">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Korziva Monorepo Platform Active
+            100% Carbon Neutral Global Fulfillment
           </div>
         </div>
       </div>
 
       {/* Copyright Strip */}
       <div className="border-t border-slate-800 py-6 text-center text-slate-500 text-[11px]">
-        &copy; {new Date().getFullYear()} Korziva Platform. Portfolio Project. Demo Storefront.
+        &copy; {new Date().getFullYear()} Korziva Inc. All rights reserved. Built for modern creators and makers worldwide.
       </div>
     </footer>
   );

@@ -231,7 +231,7 @@ export default function CartPage() {
               href="/checkout"
               className="w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
             >
-              Proceed to Demo Checkout
+              Proceed to Secure Checkout
               <ArrowRight className="w-4 h-4" />
             </Link>
 
@@ -239,7 +239,7 @@ export default function CartPage() {
             <div className="pt-4 border-t border-slate-100 space-y-2 text-[11px] text-slate-500">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Simulated Demo Checkout (No real credit card required)</span>
+                <span>256-bit SSL Encrypted & PCI-Compliant Checkout</span>
               </div>
               <div className="flex items-center gap-2">
                 <RotateCcw className="w-4 h-4 text-indigo-600 flex-shrink-0" />

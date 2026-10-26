@@ -53,19 +53,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/60 text-left text-xs space-y-2">
-            <p className="font-semibold text-slate-300">Pre-seeded Admin Account:</p>
-            <div className="font-mono text-amber-300 text-[11px] bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              admin@korziva.dev / Admin123!
-            </div>
-          </div>
-
           <div className="flex flex-col gap-3 pt-2">
             <Link
               href="/login"
               className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2"
             >
-              Go to Login Page
+              Sign In as Administrator
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link

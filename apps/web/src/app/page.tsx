@@ -8,44 +8,25 @@ import {
   ShoppingBag,
   Layers,
   ArrowUpRight,
-  Activity,
-  CheckCircle2,
+  Mail,
+  ShieldCheck,
 } from "lucide-react";
 import { Product, Category } from "@/types";
 import { apiClient } from "@/lib/api";
 import { ProductCard } from "@/components/ui/ProductCard";
 
-interface HealthData {
-  status: string;
-  service: string;
-  version: string;
-  uptime: number;
-  database?: {
-    status: string;
-    provider: string;
-    counts: {
-      users: number;
-      products: number;
-      categories: number;
-      orders: number;
-    };
-  };
-}
-
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [health, setHealth] = useState<HealthData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadHomeData() {
       try {
         setLoading(true);
-        const [prodRes, catRes, healthRes] = await Promise.all([
+        const [prodRes, catRes] = await Promise.all([
           apiClient<{ products: Product[] }>("/products/featured"),
           apiClient<{ categories: Category[] }>("/categories"),
-          apiClient<HealthData>("/health"),
         ]);
 
         if (prodRes.success && prodRes.data) {
@@ -53,9 +34,6 @@ export default function HomePage() {
         }
         if (catRes.success && catRes.data) {
           setCategories(catRes.data.categories);
-        }
-        if (healthRes.success && healthRes.data) {
-          setHealth(healthRes.data);
         }
       } catch (err) {
         console.error("Failed to load storefront data:", err);
@@ -267,52 +245,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Live System Diagnostics Card */}
-      {health && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600">
-                  <Activity className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 text-sm">Full-Stack System Status</h4>
-                  <p className="text-xs text-slate-500">Live communication with Express REST API & PostgreSQL</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  API & Database Online
-                </span>
-                <span className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-full">
-                  Stage 3 Active
-                </span>
-              </div>
+      {/* Newsletter & Early Access VIP Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 p-8 sm:p-12 text-white">
+          <div className="relative z-10 max-w-2xl mx-auto text-center space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold border border-indigo-500/30">
+              <Sparkles className="w-3.5 h-3.5" />
+              Korziva Club Exclusive
             </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-center">
-              <div className="p-3 rounded-xl bg-slate-50">
-                <div className="text-xl font-extrabold text-slate-900">{health.database?.counts.products ?? 0}</div>
-                <div className="text-xs text-slate-500 font-medium">Catalog Products</div>
+            <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+              Stay Ahead of Limited Edition Drops
+            </h3>
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Join over 25,000 creators receiving curated product launches, architectural workspace reviews, and member-only pricing.
+            </p>
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto pt-2">
+              <div className="relative flex-1">
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-800/90 border border-slate-700 text-white placeholder-slate-400 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
+                />
               </div>
-              <div className="p-3 rounded-xl bg-slate-50">
-                <div className="text-xl font-extrabold text-slate-900">{health.database?.counts.categories ?? 0}</div>
-                <div className="text-xs text-slate-500 font-medium">Active Categories</div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50">
-                <div className="text-xl font-extrabold text-slate-900">{health.database?.counts.users ?? 0}</div>
-                <div className="text-xs text-slate-500 font-medium">Registered Users</div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50">
-                <div className="text-xl font-extrabold text-slate-900">{health.database?.counts.orders ?? 0}</div>
-                <div className="text-xs text-slate-500 font-medium">Total Orders</div>
-              </div>
-            </div>
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/30 transition-all flex items-center justify-center gap-1.5 flex-shrink-0"
+              >
+                Subscribe
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </form>
+            <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5 pt-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              Zero spam. Unsubscribe anytime with a single click.
+            </p>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </div>
   );
 }

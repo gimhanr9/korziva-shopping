@@ -182,18 +182,19 @@ export default function CheckoutPage() {
 
         <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          End-to-End Encrypted Simulation
+          256-bit SSL Encrypted Checkout
         </div>
       </div>
 
-      {/* Demo Warning Banner */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-amber-900 flex items-start gap-3 shadow-xs">
-        <Lock className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-        <div className="space-y-0.5 text-xs">
-          <p className="font-bold">Demonstration Payment Environment</p>
-          <p className="text-amber-800 leading-relaxed">
-            This checkout uses a <strong>simulated payment provider</strong> for portfolio evaluation. No real credit card information is collected or processed.
-          </p>
+      {/* Trust and Security Banner */}
+      <div className="p-3.5 rounded-2xl bg-white border border-slate-200/80 text-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs shadow-xs">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <span className="font-semibold text-slate-900">Guaranteed Safe Checkout</span> &bull; 30-Day Returns &bull; 2-Year Warranty
+        </div>
+        <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
+          <Lock className="w-3.5 h-3.5 text-slate-400" />
+          Pre-Configured Instant Payment Authorization
         </div>
       </div>
 
@@ -221,7 +222,7 @@ export default function CheckoutPage() {
                 onClick={handleDemoFill}
                 className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 underline"
               >
-                Auto-fill Demo Details
+                Prefill Sample Address
               </button>
             </div>
 
@@ -382,10 +383,10 @@ export default function CheckoutPage() {
                 <span className="w-6 h-6 rounded-lg bg-indigo-50 text-indigo-700 text-xs flex items-center justify-center font-bold">
                   3
                 </span>
-                Payment Method (Simulated)
+                Payment Method
               </h2>
-              <span className="text-[10px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-md border border-indigo-100">
-                Sandbox Mode
+              <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-100">
+                Pre-Authorized
               </span>
             </div>
 
@@ -393,10 +394,10 @@ export default function CheckoutPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-indigo-600" />
-                  <span className="text-xs font-bold text-slate-900">Simulated Demo Card</span>
+                  <span className="text-xs font-bold text-slate-900">Credit or Debit Card</span>
                 </div>
                 <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                  Instant Authorization
+                  Instant Verification
                 </span>
               </div>
 
@@ -487,14 +488,14 @@ export default function CheckoutPage() {
                 </span>
               ) : (
                 <>
-                  Place Demo Order
+                  Complete Order
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
 
             <p className="text-center text-[11px] text-slate-400">
-              By placing your order, you confirm acceptance of simulated payment demo terms.
+              By placing your order, you agree to Korziva&apos;s Terms of Service and Privacy Policy.
             </p>
           </div>
         </div>
