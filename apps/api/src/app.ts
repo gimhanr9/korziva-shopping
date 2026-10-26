@@ -8,6 +8,8 @@ import { env } from "./config/env";
 import { apiRouter } from "./routes";
 import { errorHandler } from "./middleware/errorHandler";
 import { notFoundHandler } from "./middleware/notFoundHandler";
+import swaggerUi from "swagger-ui-express";
+import openapiSpec from "./docs/openapi.json";
 
 export function createApp(): Application {
   const app = express();
@@ -50,6 +52,9 @@ export function createApp(): Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
+
+  // API Documentation (Swagger / OpenAPI)
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
   // Mount API router
   app.use("/api", apiRouter);

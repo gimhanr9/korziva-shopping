@@ -11,8 +11,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
-    "lint": "echo \"No linter specified yet\"",
-    "test": "echo \"Tests will be configured in Stage 6\""
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
@@ -37,10 +37,13 @@
     "@types/jsonwebtoken": "^9.0.8",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.13.4",
-    "@types/swagger-ui-express": "^4.1.7",
+    "@types/supertest": "^7.2.1",
+    "@types/swagger-ui-express": "^4.1.8",
     "@types/yamljs": "^0.2.34",
     "prisma": "^6.4.1",
+    "supertest": "^7.3.1",
     "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vitest": "^5.0.5"
   }
 }

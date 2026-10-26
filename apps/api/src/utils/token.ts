@@ -17,9 +17,16 @@ export function generateAccessToken(user: AuthenticatedUser): string {
   );
 }
 
+import crypto from "crypto";
+
 export function generateRefreshToken(user: AuthenticatedUser): string {
   return jwt.sign(
-    { userId: user.id, email: user.email, role: user.role },
+    {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+      jti: crypto.randomUUID(),
+    },
     env.JWT_REFRESH_SECRET,
     { expiresIn: "7d" }
   );

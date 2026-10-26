@@ -99,8 +99,30 @@ npm run dev:web
 | `npm run build` | Compiles both API (`tsc`) and Next.js frontend (`next build`) |
 | `npm run build:api` | Builds API TypeScript to `apps/api/dist` |
 | `npm run build:web` | Builds Next.js production bundle |
+| `npm run test` | Runs automated unit and integration tests via Vitest across all test suites |
 | `npm run db:migrate` | Runs Prisma database migrations |
 | `npm run db:seed` | Populates database with sample products, categories, demo users, and orders |
+
+---
+
+## 📖 API Documentation & Swagger UI
+
+Interactive OpenAPI 3.0 documentation is served directly from the Express backend:
+- **Interactive UI**: `http://localhost:5000/api/docs/`
+- **Raw OpenAPI Spec**: `apps/api/src/docs/openapi.json`
+
+Covers all 26+ endpoints including authentication token rotation, product queries, cart management, atomic checkout, and admin metrics.
+
+---
+
+## 🛡️ Security Hardening
+
+- **Input Validation**: Strict schema enforcement using Zod on every payload and query parameter.
+- **Rate Limiting**: Rate limiter with standard RFC headers protecting public endpoints.
+- **Security Headers**: Managed by `helmet` with CSP, HSTS, frameguard, and XSS filtering.
+- **Decoupled Architecture**: Strict CORS restrictions allowing only configured client origins with credentials.
+- **Session Protection**: `httpOnly`, `sameSite: "lax"`, and production-aware `secure` cookies for refresh tokens and guest carts.
+- **Data Protection**: Stack traces and internal database errors are completely masked from clients in production.
 
 ---
 
@@ -111,4 +133,4 @@ npm run dev:web
 - [x] **Stage 3**: Authentication (Argon2id/bcrypt, JWT access & refresh tokens, cookies), Product catalog & storefront listing.
 - [x] **Stage 4**: Shopping cart, persistent cart, checkout, transactional inventory management & orders.
 - [x] **Stage 5**: Admin dashboard, role-based access, catalog & order management, metrics API.
-- [ ] **Stage 6**: Automated testing (unit & integration), OpenAPI/Swagger docs, security hardening, production deployment readiness.
+- [x] **Stage 6**: Automated testing (unit & integration), OpenAPI/Swagger docs, security hardening, production deployment readiness.
