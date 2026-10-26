@@ -12,6 +12,7 @@
     "build": "npm run build:api && npm run build:web",
     "build:api": "npm run build --workspace=@korziva/api",
     "build:web": "npm run build --workspace=@korziva/web",
+    "render:build": "npm run db:generate && npm run db:deploy && npm run build:api",
     "db:generate": "npm run prisma:generate --workspace=@korziva/api",
     "db:migrate": "npm run prisma:migrate --workspace=@korziva/api",
     "db:deploy": "npm run prisma:deploy --workspace=@korziva/api",
