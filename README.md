@@ -1,0 +1,101 @@
+# ShopFlow — Full-Stack E-Commerce Platform
+
+A production-minded, modular e-commerce web platform for small businesses built using a clean monorepo architecture.
+
+---
+
+## 🏗️ Architecture Overview
+
+The repository is organized as an **npm workspaces** monorepo:
+
+```
+shopflow/
+├── apps/
+│   ├── api/                    # Express.js REST API (Node.js + TypeScript)
+│   │   ├── src/
+│   │   │   ├── config/         # Environment variables validation (Zod)
+│   │   │   ├── middleware/     # Helmet, CORS, Rate Limit, Error Handling
+│   │   │   ├── routes/         # Modular REST endpoints (/api/health, ...)
+│   │   │   ├── utils/          # Standard response formatters
+│   │   │   ├── app.ts          # Express application setup
+│   │   │   └── index.ts        # Server entrypoint with graceful shutdown
+│   │   ├── tsconfig.json
+│   │   ├── .env.example
+│   │   └── package.json
+│   │
+│   └── web/                    # Next.js 15 App Router Frontend (React 19 + Tailwind CSS)
+│       ├── src/
+│       │   ├── app/            # App Router pages and layouts
+│       │   └── lib/            # HTTP API client for backend communication
+│       ├── tailwind.config.ts
+│       ├── postcss.config.mjs
+│       ├── tsconfig.json
+│       ├── .env.example
+│       └── package.json
+│
+├── .gitignore                  # Monorepo ignore rules
+├── package.json                # Root package.json managing workspaces
+├── REQUIREMENTS.md             # Full platform specifications
+└── README.md                   # Getting started & operational guide
+```
+
+---
+
+## ⚙️ Ports and Services
+
+| Application | Technology | Default Port | Health / Status Endpoint |
+| :--- | :--- | :--- | :--- |
+| **Storefront & Admin** (`apps/web`) | Next.js 15 App Router | `http://localhost:3000` | `/` |
+| **REST API** (`apps/api`) | Express.js + TypeScript | `http://localhost:5000` | `/api/health` |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Dependencies
+From the repository root:
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+- `apps/api/.env` (pre-configured for local development)
+- `apps/web/.env.local` (pre-configured with `NEXT_PUBLIC_API_URL=http://localhost:5000/api`)
+
+### 3. Start Both Applications Concurrently
+```bash
+npm run dev
+```
+
+Or run applications individually:
+```bash
+# Run Express API only
+npm run dev:api
+
+# Run Next.js Web Storefront only
+npm run dev:web
+```
+
+---
+
+## 🛠️ Monorepo Root Scripts
+
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` | Runs both API and Web concurrently |
+| `npm run dev:api` | Runs API development server with hot-reload (`tsx watch`) |
+| `npm run dev:web` | Runs Next.js development server on port 3000 |
+| `npm run build` | Compiles both API (`tsc`) and Next.js frontend (`next build`) |
+| `npm run build:api` | Builds API TypeScript to `apps/api/dist` |
+| `npm run build:web` | Builds Next.js production bundle |
+
+---
+
+## 🗺️ Implementation Stages Roadmap
+
+- [x] **Stage 1**: Monorepo Scaffolding, Workspace Configuration, and Health Verification.
+- [ ] **Stage 2**: PostgreSQL & Prisma schema, migrations, seed realistic products & categories.
+- [ ] **Stage 3**: Authentication (Argon2id/bcrypt, JWT access & refresh tokens, cookies), Product catalog & storefront listing.
+- [ ] **Stage 4**: Shopping cart, persistent cart, checkout, transactional inventory management & orders.
+- [ ] **Stage 5**: Admin dashboard, role-based access, catalog & order management, metrics API.
+- [ ] **Stage 6**: Automated testing (unit & integration), OpenAPI/Swagger docs, security hardening, production deployment readiness.
