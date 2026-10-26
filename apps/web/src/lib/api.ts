@@ -18,9 +18,15 @@ export async function apiClient<T>(
 ): Promise<ApiResponse<T>> {
   const url = `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
-  const defaultHeaders: HeadersInit = {
+  const token = typeof window !== "undefined" ? localStorage.getItem("shopflow_token") : null;
+
+  const defaultHeaders: Record<string, string> = {
     "Content-Type": "application/json",
   };
+
+  if (token) {
+    defaultHeaders["Authorization"] = `Bearer ${token}`;
+  }
 
   const response = await fetch(url, {
     ...options,
