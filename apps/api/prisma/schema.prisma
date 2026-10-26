@@ -1,0 +1,210 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  passwordHash  String
+  firstName     String
+  lastName      String
+  role          Role           @default(CUSTOMER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  addresses     Address[]
+  cart          Cart?
+  orders        Order[]
+  refreshTokens RefreshToken[]
+
+  @@index([email])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName   String
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String   @default("US")
+  phone      String?
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  orders     Order[]
+
+  @@index([userId])
+}
+
+model Category {
+  id           String    @id @default(cuid())
+  name         String    @unique
+  slug         String    @unique
+  description  String?
+  imageUrl     String?
+  displayOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  products     Product[]
+
+  @@index([slug])
+}
+
+model Product {
+  id                    String         @id @default(cuid())
+  name                  String
+  slug                  String         @unique
+  description           String
+  priceInCents          Int            // Stored in minor units (cents) to avoid floating point issues
+  compareAtPriceInCents Int?           // Optional original/strikethrough price
+  stock                 Int            @default(0)
+  sku                   String         @unique
+  isFeatured            Boolean        @default(false)
+  isActive              Boolean        @default(true)
+  categoryId            String
+  category              Category       @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  images                ProductImage[]
+  cartItems             CartItem[]
+  orderItems            OrderItem[]
+
+  @@index([categoryId])
+  @@index([slug])
+  @@index([isFeatured, isActive])
+}
+
+model ProductImage {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url          String
+  altText      String?
+  isPrimary    Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([productId])
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String?    @unique
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String?    @unique // Session token for guest cart persistence
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  items     CartItem[]
+
+  @@index([userId])
+  @@index([sessionId])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
+}
+
+model Order {
+  id                      String         @id @default(cuid())
+  orderNumber             String         @unique
+  userId                  String?
+  user                    User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  customerEmail           String
+  customerName            String
+  customerPhone           String?
+  shippingAddressId       String?
+  shippingAddress         Address?       @relation(fields: [shippingAddressId], references: [id], onDelete: SetNull)
+  shippingAddressSnapshot Json           // Immutable historical snapshot of delivery address
+  subtotalInCents         Int
+  shippingInCents         Int            @default(0)
+  taxInCents              Int            @default(0)
+  totalInCents            Int
+  status                  OrderStatus    @default(PENDING)
+  paymentStatus           PaymentStatus  @default(PENDING)
+  paymentReference        String?
+  paymentProvider         String         @default("simulated")
+  idempotencyKey          String?        @unique
+  notes                   String?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  items                   OrderItem[]
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id               String   @id @default(cuid())
+  orderId          String
+  order            Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId        String?
+  product          Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName      String   // Immutable historical snapshot
+  productSku       String   // Immutable historical snapshot
+  unitPriceInCents Int      // Immutable historical snapshot
+  quantity         Int
+  totalPriceInCents Int     // Historical snapshot calculation: quantity * unitPriceInCents
+  productImageUrl  String?
+
+  @@index([orderId])
+  @@index([productId])
+}

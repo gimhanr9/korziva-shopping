@@ -11,6 +11,16 @@ interface HealthData {
   uptime: number;
   timestamp: string;
   environment: string;
+  database?: {
+    status: string;
+    provider: string;
+    counts: {
+      users: number;
+      products: number;
+      categories: number;
+      orders: number;
+    };
+  };
 }
 
 export default function HomePage() {
@@ -50,8 +60,8 @@ export default function HomePage() {
             <span className="font-bold text-xl tracking-tight text-slate-900">
               Shop<span className="text-indigo-600">Flow</span>
             </span>
-            <span className="text-xs bg-indigo-50 text-indigo-700 font-semibold px-2.5 py-0.5 rounded-full border border-indigo-100 ml-2">
-              Stage 1 Scaffolding
+            <span className="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-100 ml-2">
+              Stage 2 Database & Seeded
             </span>
           </div>
           <div className="flex items-center gap-4 text-sm font-medium text-slate-600">
@@ -133,6 +143,35 @@ export default function HomePage() {
                   <span className="text-slate-500 font-medium">Response Timestamp:</span>
                   <span className="text-slate-800 font-mono text-xs">{health.timestamp}</span>
                 </div>
+                {health.database && (
+                  <div className="mt-3 pt-3 border-t border-slate-200">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Database Status</span>
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                        {health.database.provider} Connected
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 pt-1 text-center">
+                      <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                        <div className="text-base font-bold text-slate-900">{health.database.counts.products}</div>
+                        <div className="text-[10px] text-slate-500 font-medium">Products</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                        <div className="text-base font-bold text-slate-900">{health.database.counts.categories}</div>
+                        <div className="text-[10px] text-slate-500 font-medium">Categories</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                        <div className="text-base font-bold text-slate-900">{health.database.counts.users}</div>
+                        <div className="text-[10px] text-slate-500 font-medium">Users</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                        <div className="text-base font-bold text-slate-900">{health.database.counts.orders}</div>
+                        <div className="text-[10px] text-slate-500 font-medium">Orders</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
 
@@ -182,17 +221,17 @@ export default function HomePage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
                 <Database className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-slate-900 text-lg">Stage 2 (Database)</h3>
+              <h3 className="font-bold text-slate-900 text-lg">PostgreSQL & Prisma</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                PostgreSQL with Prisma ORM managed strictly by Express backend. Schema for users, products, categories, carts, orders, and addresses.
+                Schema migrated and seeded. Money stored in minor units (cents). Relational models for users, products, categories, cart, orders, and addresses.
               </p>
             </div>
             <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Prisma ORM</span>
-              <span className="text-amber-600 font-medium">Pending Stage 2</span>
+              <span>PostgreSQL 18</span>
+              <span className="text-emerald-600 font-medium">Migrated & Seeded</span>
             </div>
           </div>
         </div>
@@ -204,14 +243,14 @@ export default function HomePage() {
               <Layers className="w-4 h-4" />
               Workflow Progress
             </div>
-            <h4 className="text-xl font-bold">Stage 1 Scaffolding Complete</h4>
+            <h4 className="text-xl font-bold">Stage 2 Database & Seed Complete</h4>
             <p className="text-slate-400 text-sm max-w-xl">
-              NPM workspaces, Express REST backend, and Next.js frontend are installed and tested. Ready for review and project plan before Stage 2.
+              PostgreSQL schema migrated, Prisma Client generated, and realistic sample data seeded. Ready for Stage 3 (Authentication, Authorization & Product APIs).
             </p>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs font-medium text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-3.5 py-2 rounded-xl flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4" /> Ready for Verification
+              <CheckCircle2 className="w-4 h-4" /> Stage 2 Verified
             </span>
           </div>
         </div>

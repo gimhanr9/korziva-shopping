@@ -12,6 +12,10 @@
     "build": "npm run build:api && npm run build:web",
     "build:api": "npm run build --workspace=@shopflow/api",
     "build:web": "npm run build --workspace=@shopflow/web",
+    "db:generate": "npm run prisma:generate --workspace=@shopflow/api",
+    "db:migrate": "npm run prisma:migrate --workspace=@shopflow/api",
+    "db:deploy": "npm run prisma:deploy --workspace=@shopflow/api",
+    "db:seed": "npm run prisma:seed --workspace=@shopflow/api",
     "lint": "npm run lint --workspaces",
     "test": "npm run test --workspaces"
   },
