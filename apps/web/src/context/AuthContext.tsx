@@ -26,7 +26,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchCurrentUser = useCallback(async () => {
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("shopflow_token") : null;
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("korziva_token") || localStorage.getItem("shopflow_token")
+          : null;
       if (!token) {
         setUser(null);
         setLoading(false);
@@ -38,6 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(res.data.user);
       } else {
         // Token might be expired, remove it
+        localStorage.removeItem("korziva_token");
         localStorage.removeItem("shopflow_token");
         setUser(null);
       }
@@ -60,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (res.success && res.data) {
-        localStorage.setItem("shopflow_token", res.data.accessToken);
+        localStorage.setItem("korziva_token", res.data.accessToken);
         setUser(res.data.user);
         return { success: true };
       }
@@ -90,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (res.success && res.data) {
-        localStorage.setItem("shopflow_token", res.data.accessToken);
+        localStorage.setItem("korziva_token", res.data.accessToken);
         setUser(res.data.user);
         return { success: true };
       }
@@ -111,6 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await apiClient("/auth/logout", { method: "POST" });
     } finally {
+      localStorage.removeItem("korziva_token");
       localStorage.removeItem("shopflow_token");
       setUser(null);
     }

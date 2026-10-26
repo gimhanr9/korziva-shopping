@@ -18,7 +18,10 @@ export async function apiClient<T>(
 ): Promise<ApiResponse<T>> {
   const url = `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
-  const token = typeof window !== "undefined" ? localStorage.getItem("shopflow_token") : null;
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("korziva_token") || localStorage.getItem("shopflow_token")
+      : null;
 
   const defaultHeaders: Record<string, string> = {
     "Content-Type": "application/json",

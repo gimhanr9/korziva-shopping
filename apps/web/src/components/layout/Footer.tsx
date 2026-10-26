@@ -59,7 +59,7 @@ export function Footer() {
               <ShoppingBag className="w-4 h-4" />
             </div>
             <span className="font-bold text-lg text-white">
-              Shop<span className="text-indigo-400">Flow</span>
+              Kor<span className="text-indigo-400">ziva</span>
             </span>
           </div>
           <p className="text-slate-400 leading-relaxed text-xs">
@@ -135,14 +135,14 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-2 text-[11px] text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Monorepo Stage 3 Active
+            Korziva Monorepo Platform Active
           </div>
         </div>
       </div>
 
       {/* Copyright Strip */}
       <div className="border-t border-slate-800 py-6 text-center text-slate-500 text-[11px]">
-        &copy; {new Date().getFullYear()} ShopFlow Platform. Portfolio Project. Demo Storefront.
+        &copy; {new Date().getFullYear()} Korziva Platform. Portfolio Project. Demo Storefront.
       </div>
     </footer>
   );

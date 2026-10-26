@@ -90,7 +90,7 @@ export default function CheckoutPage() {
     setFormData((prev) => ({
       ...prev,
       customerName: prev.customerName || "Dineth Gimhan",
-      customerEmail: prev.customerEmail || "customer@shopflow.dev",
+      customerEmail: prev.customerEmail || "customer@korziva.dev",
       customerPhone: "+1 (555) 765-4321",
       fullName: "Dineth Customer",
       street: "742 Evergreen Terrace",
@@ -245,7 +245,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.customerEmail}
                   onChange={(e) => setFormData({ ...formData, customerEmail: e.target.value })}
-                  placeholder="e.g. customer@shopflow.dev"
+                  placeholder="e.g. customer@korziva.dev"
                   className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-900"
                 />
               </div>

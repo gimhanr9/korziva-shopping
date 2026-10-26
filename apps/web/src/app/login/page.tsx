@@ -31,13 +31,13 @@ export default function LoginPage() {
   };
 
   const fillDemoCustomer = () => {
-    setEmail("customer@shopflow.dev");
+    setEmail("customer@korziva.dev");
     setPassword("Customer123!");
     setError(null);
   };
 
   const fillDemoAdmin = () => {
-    setEmail("admin@shopflow.dev");
+    setEmail("admin@korziva.dev");
     setPassword("Admin123!");
     setError(null);
   };
@@ -51,7 +51,7 @@ export default function LoginPage() {
             <ShoppingBag className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            Sign In to ShopFlow
+            Sign In to Korziva
           </h2>
           <p className="text-xs text-slate-500">
             Access your orders, saved addresses, and persistent cart
@@ -71,7 +71,7 @@ export default function LoginPage() {
               className="py-2 px-3 rounded-xl bg-white text-indigo-700 font-semibold text-xs border border-indigo-200/80 hover:bg-indigo-50/80 transition-colors shadow-xs text-left"
             >
               <div className="font-bold">Customer</div>
-              <div className="text-[10px] text-slate-500">customer@shopflow.dev</div>
+              <div className="text-[10px] text-slate-500">customer@korziva.dev</div>
             </button>
             <button
               type="button"
@@ -81,7 +81,7 @@ export default function LoginPage() {
               <div className="font-bold flex items-center gap-1">
                 Admin <Shield className="w-3 h-3 text-amber-600" />
               </div>
-              <div className="text-[10px] text-slate-500">admin@shopflow.dev</div>
+              <div className="text-[10px] text-slate-500">admin@korziva.dev</div>
             </button>
           </div>
         </div>

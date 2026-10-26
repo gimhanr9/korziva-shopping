@@ -45,7 +45,7 @@ export default function RegisterPage() {
             Create an Account
           </h2>
           <p className="text-xs text-slate-500">
-            Join ShopFlow to track orders, manage addresses, and save carts
+            Join Korziva to track orders, manage addresses, and save carts
           </p>
         </div>
 

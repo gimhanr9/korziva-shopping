@@ -18,7 +18,7 @@ healthRouter.get("/", async (_req: Request, res: Response) => {
 
     const healthData = {
       status: "ok",
-      service: "ShopFlow API",
+      service: "Korziva API",
       version: "0.1.0",
       uptime: Math.floor(process.uptime()),
       timestamp: new Date().toISOString(),
@@ -35,7 +35,7 @@ healthRouter.get("/", async (_req: Request, res: Response) => {
       },
     };
 
-    sendSuccess(res, healthData, "ShopFlow API and Database are operating normally");
+    sendSuccess(res, healthData, "Korziva API and Database are operating normally");
   } catch (err: unknown) {
     sendError(
       res,

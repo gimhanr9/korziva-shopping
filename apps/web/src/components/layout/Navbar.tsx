@@ -44,7 +44,7 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-xl tracking-tight text-slate-900 leading-none">
-                Shop<span className="text-indigo-600">Flow</span>
+                Kor<span className="text-indigo-600">ziva</span>
               </span>
               <span className="text-[10px] tracking-widest text-slate-400 font-semibold uppercase mt-0.5">
                 Modern Commerce

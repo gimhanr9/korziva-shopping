@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "ShopFlow | Modern E-commerce Platform",
+  title: "Korziva | Modern E-commerce Platform",
   description: "A production-minded, full-stack e-commerce web platform for small businesses.",
 };
 

@@ -8,8 +8,8 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   CLIENT_URL: z.string().default("http://localhost:3000"),
   DATABASE_URL: z.string().optional(),
-  JWT_SECRET: z.string().default("dev_secret_jwt_shopflow"),
-  JWT_REFRESH_SECRET: z.string().default("dev_secret_refresh_shopflow"),
+  JWT_SECRET: z.string().default("dev_secret_jwt_korziva"),
+  JWT_REFRESH_SECRET: z.string().default("dev_secret_refresh_korziva"),
 });
 
 const parsed = envSchema.safeParse(process.env);

@@ -141,10 +141,10 @@ export class OrderService {
         savedAddressId = address.id;
       }
 
-      // Generate Order Number: SF-ORD-YYYYMMDD-XXXX
+      // Generate Order Number: KZ-ORD-YYYYMMDD-XXXX
       const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, "");
       const randomSuffix = crypto.randomBytes(3).toString("hex").toUpperCase();
-      const orderNumber = `SF-ORD-${datePart}-${randomSuffix}`;
+      const orderNumber = `KZ-ORD-${datePart}-${randomSuffix}`;
 
       // Create Order
       const order = await tx.order.create({

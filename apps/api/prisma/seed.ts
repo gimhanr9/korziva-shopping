@@ -26,7 +26,7 @@ async function main() {
 
   const admin = await prisma.user.create({
     data: {
-      email: "admin@shopflow.dev",
+      email: "admin@korziva.dev",
       passwordHash: adminPasswordHash,
       firstName: "Alex",
       lastName: "Administrator",
@@ -36,7 +36,7 @@ async function main() {
 
   const customer = await prisma.user.create({
     data: {
-      email: "customer@shopflow.dev",
+      email: "customer@korziva.dev",
       passwordHash: customerPasswordHash,
       firstName: "Dineth",
       lastName: "Customer",
@@ -124,7 +124,7 @@ async function main() {
       priceInCents: 24900, // $249.00
       compareAtPriceInCents: 29900, // $299.00
       stock: 45,
-      sku: "SF-AUD-001",
+      sku: "KZ-AUD-001",
       isFeatured: true,
       categoryId: audioCategory.id,
       images: [
@@ -150,7 +150,7 @@ async function main() {
       priceInCents: 12900, // $129.00
       compareAtPriceInCents: 15900,
       stock: 75,
-      sku: "SF-AUD-002",
+      sku: "KZ-AUD-002",
       isFeatured: true,
       categoryId: audioCategory.id,
       images: [
@@ -170,7 +170,7 @@ async function main() {
       priceInCents: 17900, // $179.00
       compareAtPriceInCents: 21900,
       stock: 30,
-      sku: "SF-WKS-001",
+      sku: "KZ-WKS-001",
       isFeatured: true,
       categoryId: workstationCategory.id,
       images: [
@@ -190,7 +190,7 @@ async function main() {
       priceInCents: 8900, // $89.00
       compareAtPriceInCents: 9900,
       stock: 60,
-      sku: "SF-WKS-002",
+      sku: "KZ-WKS-002",
       isFeatured: false,
       categoryId: workstationCategory.id,
       images: [
@@ -210,7 +210,7 @@ async function main() {
       priceInCents: 54900, // $549.00
       compareAtPriceInCents: 59900,
       stock: 15,
-      sku: "SF-WKS-003",
+      sku: "KZ-WKS-003",
       isFeatured: true,
       categoryId: workstationCategory.id,
       images: [
@@ -230,7 +230,7 @@ async function main() {
       priceInCents: 13900, // $139.00
       compareAtPriceInCents: 16900,
       stock: 40,
-      sku: "SF-LST-001",
+      sku: "KZ-LST-001",
       isFeatured: true,
       categoryId: lifestyleCategory.id,
       images: [
@@ -250,7 +250,7 @@ async function main() {
       priceInCents: 3400, // $34.00
       compareAtPriceInCents: null,
       stock: 120,
-      sku: "SF-LST-002",
+      sku: "KZ-LST-002",
       isFeatured: false,
       categoryId: lifestyleCategory.id,
       images: [
@@ -270,7 +270,7 @@ async function main() {
       priceInCents: 7900, // $79.00
       compareAtPriceInCents: 9900,
       stock: 50,
-      sku: "SF-SMH-001",
+      sku: "KZ-SMH-001",
       isFeatured: true,
       categoryId: smartHomeCategory.id,
       images: [
@@ -290,7 +290,7 @@ async function main() {
       priceInCents: 19900, // $199.00
       compareAtPriceInCents: 23900,
       stock: 25,
-      sku: "SF-SMH-002",
+      sku: "KZ-SMH-002",
       isFeatured: false,
       categoryId: smartHomeCategory.id,
       images: [
@@ -368,7 +368,7 @@ async function main() {
   // Order 1: Completed / Delivered
   const order1 = await prisma.order.create({
     data: {
-      orderNumber: "SF-ORD-20261020-001",
+      orderNumber: "KZ-ORD-20261020-001",
       userId: customer.id,
       customerEmail: customer.email,
       customerName: `${customer.firstName} ${customer.lastName}`,
@@ -402,7 +402,7 @@ async function main() {
   // Order 2: Processing / Paid
   const order2 = await prisma.order.create({
     data: {
-      orderNumber: "SF-ORD-20261024-002",
+      orderNumber: "KZ-ORD-20261024-002",
       userId: customer.id,
       customerEmail: customer.email,
       customerName: `${customer.firstName} ${customer.lastName}`,
@@ -447,8 +447,8 @@ async function main() {
   console.log("\n🎉 Database seed completed successfully!");
   console.log("-----------------------------------------");
   console.log("Demo Credentials:");
-  console.log("Admin:    admin@shopflow.dev    / Admin123!");
-  console.log("Customer: customer@shopflow.dev / Customer123!");
+  console.log("Admin:    admin@korziva.dev    / Admin123!");
+  console.log("Customer: customer@korziva.dev / Customer123!");
   console.log("-----------------------------------------");
 }
 

@@ -49,14 +49,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="space-y-2">
             <h1 className="text-2xl font-black text-white">Administrator Access Required</h1>
             <p className="text-xs text-slate-400 leading-relaxed">
-              This interface is strictly restricted to ShopFlow system administrators. Please sign in with an administrative account.
+              This interface is strictly restricted to Korziva system administrators. Please sign in with an administrative account.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/60 text-left text-xs space-y-2">
             <p className="font-semibold text-slate-300">Pre-seeded Admin Account:</p>
             <div className="font-mono text-amber-300 text-[11px] bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              admin@shopflow.dev / Admin123!
+              admin@korziva.dev / Admin123!
             </div>
           </div>
 
@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
               <div className="flex flex-col">
                 <span className="font-extrabold text-base tracking-tight text-white leading-none">
-                  ShopFlow
+                  Korziva
                 </span>
                 <span className="text-[10px] tracking-widest text-amber-400 font-semibold uppercase mt-0.5">
                   Admin Panel

@@ -15,11 +15,14 @@ export function cartSessionMiddleware(
   res: Response,
   next: NextFunction
 ): void {
-  let sessionId = req.cookies?.shopflow_cart_session || req.headers["x-cart-session"] as string | undefined;
+  let sessionId =
+    req.cookies?.korziva_cart_session ||
+    req.cookies?.shopflow_cart_session ||
+    (req.headers["x-cart-session"] as string | undefined);
 
   if (!sessionId) {
     sessionId = crypto.randomUUID();
-    res.cookie("shopflow_cart_session", sessionId, {
+    res.cookie("korziva_cart_session", sessionId, {
       httpOnly: true,
       secure: env.NODE_ENV === "production",
       sameSite: "lax",

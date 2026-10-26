@@ -1,4 +1,4 @@
-# ShopFlow — Full-Stack E-Commerce Platform
+# Korziva — Full-Stack E-Commerce Platform
 
 A production-minded, modular e-commerce web platform for small businesses built using a clean monorepo architecture.
 
@@ -9,23 +9,28 @@ A production-minded, modular e-commerce web platform for small businesses built 
 The repository is organized as an **npm workspaces** monorepo:
 
 ```
-shopflow/
+korziva/
 ├── apps/
 │   ├── api/                    # Express.js REST API (Node.js + TypeScript)
 │   │   ├── src/
 │   │   │   ├── config/         # Environment variables validation (Zod)
-│   │   │   ├── middleware/     # Helmet, CORS, Rate Limit, Error Handling
-│   │   │   ├── routes/         # Modular REST endpoints (/api/health, ...)
-│   │   │   ├── utils/          # Standard response formatters
+│   │   │   ├── controllers/    # Route controllers
+│   │   │   ├── middleware/     # Helmet, CORS, Rate Limit, Auth, CartSession, Error Handling
+│   │   │   ├── routes/         # Modular REST endpoints (/api/health, /api/auth, /api/products, ...)
+│   │   │   ├── services/       # Core business logic, transactional checkouts, payments
+│   │   │   ├── utils/          # Standard response formatters & token generators
 │   │   │   ├── app.ts          # Express application setup
 │   │   │   └── index.ts        # Server entrypoint with graceful shutdown
+│   │   ├── prisma/             # PostgreSQL Schema, Migrations, and Realistic Seeder
 │   │   ├── tsconfig.json
 │   │   ├── .env.example
 │   │   └── package.json
 │   │
 │   └── web/                    # Next.js 15 App Router Frontend (React 19 + Tailwind CSS)
 │       ├── src/
-│       │   ├── app/            # App Router pages and layouts
+│       │   ├── app/            # App Router pages and layouts (Storefront + Executive Dark Admin)
+│       │   ├── components/     # High-polish UI components, Modals, Category Filters
+│       │   ├── context/        # Auth and Cart state management
 │       │   └── lib/            # HTTP API client for backend communication
 │       ├── tailwind.config.ts
 │       ├── postcss.config.mjs
@@ -59,10 +64,16 @@ npm install
 ```
 
 ### 2. Configure Environment Variables
-- `apps/api/.env` (pre-configured for local development)
+- `apps/api/.env` (pre-configured for local PostgreSQL database)
 - `apps/web/.env.local` (pre-configured with `NEXT_PUBLIC_API_URL=http://localhost:5000/api`)
 
-### 3. Start Both Applications Concurrently
+### 3. Database Migration & Realistic Seed
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+### 4. Start Both Applications Concurrently
 ```bash
 npm run dev
 ```
@@ -88,14 +99,16 @@ npm run dev:web
 | `npm run build` | Compiles both API (`tsc`) and Next.js frontend (`next build`) |
 | `npm run build:api` | Builds API TypeScript to `apps/api/dist` |
 | `npm run build:web` | Builds Next.js production bundle |
+| `npm run db:migrate` | Runs Prisma database migrations |
+| `npm run db:seed` | Populates database with sample products, categories, demo users, and orders |
 
 ---
 
 ## 🗺️ Implementation Stages Roadmap
 
 - [x] **Stage 1**: Monorepo Scaffolding, Workspace Configuration, and Health Verification.
-- [ ] **Stage 2**: PostgreSQL & Prisma schema, migrations, seed realistic products & categories.
-- [ ] **Stage 3**: Authentication (Argon2id/bcrypt, JWT access & refresh tokens, cookies), Product catalog & storefront listing.
-- [ ] **Stage 4**: Shopping cart, persistent cart, checkout, transactional inventory management & orders.
-- [ ] **Stage 5**: Admin dashboard, role-based access, catalog & order management, metrics API.
+- [x] **Stage 2**: PostgreSQL & Prisma schema, migrations, seed realistic products & categories.
+- [x] **Stage 3**: Authentication (Argon2id/bcrypt, JWT access & refresh tokens, cookies), Product catalog & storefront listing.
+- [x] **Stage 4**: Shopping cart, persistent cart, checkout, transactional inventory management & orders.
+- [x] **Stage 5**: Admin dashboard, role-based access, catalog & order management, metrics API.
 - [ ] **Stage 6**: Automated testing (unit & integration), OpenAPI/Swagger docs, security hardening, production deployment readiness.

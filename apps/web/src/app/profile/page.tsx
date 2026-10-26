@@ -94,7 +94,7 @@ export default function ProfilePage() {
             <Calendar className="w-4 h-4 text-slate-400" />
             {user.createdAt ? formatDate(user.createdAt) : "Active Member"}
           </div>
-          <p className="text-xs text-slate-500 pt-1">ShopFlow Customer Account</p>
+          <p className="text-xs text-slate-500 pt-1">Korziva Customer Account</p>
         </div>
       </div>
 

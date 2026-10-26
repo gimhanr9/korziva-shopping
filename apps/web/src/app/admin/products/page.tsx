@@ -397,7 +397,7 @@ export default function AdminProductsPage() {
                     required
                     value={formData.sku}
                     onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                    placeholder="SF-PRO-001"
+                    placeholder="KZ-PRO-001"
                     className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-[11px]"
                   />
                 </div>
