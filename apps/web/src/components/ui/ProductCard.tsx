@@ -22,12 +22,14 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const discountPercent = calculateDiscount(product.priceInCents, product.compareAtPriceInCents);
 
-  const handleAdd = (e: React.MouseEvent) => {
+  const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product, 1);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    const res = await addToCart(product.id, 1);
+    if (res.success) {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 1500);
+    }
   };
 
   return (

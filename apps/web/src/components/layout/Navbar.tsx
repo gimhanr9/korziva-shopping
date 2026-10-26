@@ -81,8 +81,8 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             {/* Cart Button */}
             <Link
-              href="/products"
-              title="Cart items"
+              href="/cart"
+              title="Shopping Cart"
               className="relative p-2 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition-colors flex items-center"
             >
               <ShoppingBag className="w-5 h-5" />
@@ -131,6 +131,15 @@ export function Navbar() {
                     >
                       <UserIcon className="w-4 h-4 text-slate-400" />
                       My Profile & Addresses
+                    </Link>
+
+                    <Link
+                      href="/orders"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
+                      <PackageCheck className="w-4 h-4 text-slate-400" />
+                      My Orders & Receipts
                     </Link>
 
                     {user.role === "ADMIN" && (

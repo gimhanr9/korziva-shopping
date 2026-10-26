@@ -95,10 +95,12 @@ export default function ProductDetailPage({
 
   const discountPercent = calculateDiscount(product.priceInCents, product.compareAtPriceInCents);
 
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-    setAddedSuccess(true);
-    setTimeout(() => setAddedSuccess(false), 2000);
+  const handleAddToCart = async () => {
+    const res = await addToCart(product.id, quantity);
+    if (res.success) {
+      setAddedSuccess(true);
+      setTimeout(() => setAddedSuccess(false), 2000);
+    }
   };
 
   return (

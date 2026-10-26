@@ -1,101 +1,143 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Product } from "@/types";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { apiClient } from "@/lib/api";
 
-export interface LocalCartItem {
-  product: Product;
+export interface CartItemData {
+  id: string;
+  productId: string;
+  name: string;
+  slug: string;
+  sku: string;
+  unitPriceInCents: number;
   quantity: number;
+  lineTotalInCents: number;
+  stockAvailable: number;
+  isOutOfStock: boolean;
+  imageUrl: string;
+  categoryName?: string;
+}
+
+interface CartDetails {
+  cartId: string;
+  items: CartItemData[];
+  itemCount: number;
+  subtotalInCents: number;
+  shippingInCents: number;
+  taxInCents: number;
+  totalInCents: number;
 }
 
 interface CartContextType {
-  items: LocalCartItem[];
+  cart: CartDetails | null;
+  loading: boolean;
   itemCount: number;
-  subtotalInCents: number;
-  addToCart: (product: Product, quantity?: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+  addToCart: (productId: string, quantity?: number) => Promise<{ success: boolean; error?: string }>;
+  updateQuantity: (itemId: string, quantity: number) => Promise<void>;
+  removeItem: (itemId: string) => Promise<void>;
+  clearCart: () => Promise<void>;
+  refreshCart: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<LocalCartItem[]>([]);
+  const [cart, setCart] = useState<CartDetails | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Load from localStorage on mount
-  useEffect(() => {
+  const fetchCart = useCallback(async () => {
     try {
-      const saved = localStorage.getItem("shopflow_local_cart");
-      if (saved) {
-        setItems(JSON.parse(saved));
+      const res = await apiClient<CartDetails>("/cart");
+      if (res.success && res.data) {
+        setCart(res.data);
       }
-    } catch {
-      // Ignore
+    } catch (err) {
+      console.error("Failed to fetch cart:", err);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  // Save to localStorage on change
   useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
+
+  const addToCart = async (productId: string, quantity = 1) => {
     try {
-      localStorage.setItem("shopflow_local_cart", JSON.stringify(items));
-    } catch {
-      // Ignore
-    }
-  }, [items]);
+      const res = await apiClient<CartDetails>("/cart/items", {
+        method: "POST",
+        body: JSON.stringify({ productId, quantity }),
+      });
 
-  const addToCart = (product: Product, quantity = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        const newQty = Math.min(existing.quantity + quantity, product.stock);
-        return prev.map((item) =>
-          item.product.id === product.id ? { ...item, quantity: newQty } : item
-        );
+      if (res.success && res.data) {
+        setCart(res.data);
+        return { success: true };
       }
-      return [...prev, { product, quantity: Math.min(quantity, product.stock) }];
-    });
-  };
-
-  const removeFromCart = (productId: string) => {
-    setItems((prev) => prev.filter((item) => item.product.id !== productId));
-  };
-
-  const updateQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId);
-      return;
+      return {
+        success: false,
+        error: res.error?.message || "Failed to add product to cart",
+      };
+    } catch (err: unknown) {
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : "Network error",
+      };
     }
-    setItems((prev) =>
-      prev.map((item) => {
-        if (item.product.id === productId) {
-          return { ...item, quantity: Math.min(quantity, item.product.stock) };
-        }
-        return item;
-      })
-    );
   };
 
-  const clearCart = () => {
-    setItems([]);
+  const updateQuantity = async (itemId: string, quantity: number) => {
+    try {
+      const res = await apiClient<CartDetails>(`/cart/items/${itemId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ quantity }),
+      });
+      if (res.success && res.data) {
+        setCart(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to update cart quantity:", err);
+    }
   };
 
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotalInCents = items.reduce(
-    (sum, item) => sum + item.product.priceInCents * item.quantity,
-    0
-  );
+  const removeItem = async (itemId: string) => {
+    try {
+      const res = await apiClient<CartDetails>(`/cart/items/${itemId}`, {
+        method: "DELETE",
+      });
+      if (res.success && res.data) {
+        setCart(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to remove item from cart:", err);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      const res = await apiClient<CartDetails>("/cart", {
+        method: "DELETE",
+      });
+      if (res.success && res.data) {
+        setCart(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to clear cart:", err);
+    }
+  };
+
+  const itemCount = cart?.itemCount ?? 0;
 
   return (
     <CartContext.Provider
       value={{
-        items,
+        cart,
+        loading,
         itemCount,
-        subtotalInCents,
         addToCart,
-        removeFromCart,
         updateQuantity,
+        removeItem,
         clearCart,
+        refreshCart: fetchCart,
       }}
     >
       {children}
